@@ -22,20 +22,19 @@ The steps in this document assume that you have access to an OpenShift deploymen
 ### Installation
 These steps assume your OpenShift deployment has the default set of ImageStreams defined. Instructions for installing the default ImageStreams are available [here](https://docs.okd.io/latest/install_config/imagestreams_templates.html#creating-image-streams-for-openshift-images).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace.
 
-1. Fork a copy of [ruby-ex](https://github.com/sclorg/ruby-ex)
-2. Add a Ruby application from your new repository:
+1. Add a Ruby application from your new repository:
 
-		$ oc new-app openshift/ruby:25~https://github.com/< yourusername >/ruby-ex 
+		$ oc new-app openshift/ruby:25~https://github.com/tektutor/ruby
 
-3. A build should start immediately.  To run another build, run:
+2. A build should start immediately.  To run another build, run:
 
-		$ oc start-build ruby-ex
+		$ oc start-build ruby
 
-4. Once the build is running, watch your build progress:  
+3. Once the build is running, watch your build progress:  
 
 		$ oc logs build/ruby-ex-1
 
-5. Wait for ruby-ex pods to start up (this can take a few minutes):  
+4. Wait for ruby-ex pods to start up (this can take a few minutes):  
 
 		$ oc get pods -w
 
@@ -59,24 +58,5 @@ These steps assume your OpenShift deployment has the default set of ImageStreams
 		ruby-ex   172.30.97.209   <none>        8080/TCP   deploymentconfig=ruby-ex   2m
 
 
-In this case, the IP for ruby-ex is 172.30.97.209 and it is on port 8080.  
+In this case, the IP for ruby is 172.30.97.209 and it is on port 8080.  
 *Note*: you can also get this information from the web console.
-
-
-### Debugging Unexpected Failures
-
-Review some of the common tips and suggestions [here](https://github.com/openshift/origin/blob/master/docs/debugging-openshift.md).
-
-### Adding Webhooks and Making Code Changes
-Since OpenShift V3 does not provide a git repository out of the box, you can configure your github repository to make a webhook call whenever you push your code.
-
-1. From the console navigate to your project.  
-2. Click on Browse > Builds  
-3. From the view for your Build click on the link to display your GitHub webhook and copy the url.  
-4. Navigate to your repository on GitHub and click on repository settings > webhooks  
-5. Paste your copied webhook url provided by OpenShift
-6. Change the Content type to `application/json` - Thats it!
-7. After you save your webhook, if you refresh your settings page you can see the status of the ping that Github sent to OpenShift to verify it can reach the server.  
-
-### License
-This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
